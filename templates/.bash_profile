@@ -1,7 +1,8 @@
 
+. ~/.profile
 
-
-export PATH=$PATH:/Users/mperrett/bin
+SOURCE=~/Source
+alias Source="cd $SOURCE"
 
 ########    TMUX    ########
 alias mux=tmuxinator
@@ -10,8 +11,9 @@ alias mux.env.deploy='mux env-deploy'
 alias mux.env.logs='mux env-logs'
 
 ########    GENERAL    ########
-alias reload_bash_profile='source ~/.bash_profile'
-alias jenkins.update='ssh -t -i ~/.ssh/cost-ci-master.pem ubuntu@10.4.64.203 /home/ubuntu/update-jenkins.sh'
+alias ls='ls -alst'
+alias reload='$SOURCE/mac-setup/install-templates && . ~/.bash_profile'
+alias ssh='sshrc'
 
 ########    JAVA    ########
 export JAVA8_HOME=`/usr/libexec/java_home -v 1.8`
@@ -26,6 +28,13 @@ alias java11="export JAVA_HOME=\"${JAVA11_HOME}\"; export MAVEN_OPTS=\"${JAVA11_
 alias docker.remove.dangling='docker rmi $(docker images -qa -f "dangling=true")'
 
 ########    GIT    ########
+alias gs='git status'
+alias gb='git branch'
+alias gc='git checkout'
+alias stash='git stash'
+alias pop='git stash pop'
+alias spp='stash && git pull && pop'
+
 alias git.branch.name='git branch | grep \* | cut -d " " -f2'
 alias git.push='git push -u origin `git.branch.name`'
 alias git.master='git checkout master && git pull'
@@ -137,11 +146,17 @@ if [ -f ~/.git-completion.bash ]; then
   . ~/.git-completion.bash
 fi
 
-test -r $HOME/.profile && source $HOME/.profile
-
 # Git branch in prompt
-parse_git_branch() {
-  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-}
-export PS1="\u@\h:\W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+#parse_git_branch() {
+#  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
+#}
+#export PS1="\u@\h:\W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
+if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
+  __GIT_PROMPT_DIR=$(brew --prefix)/opt/bash-git-prompt/share
+  GIT_PROMPT_ONLY_IN_REPO=1
+  source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
+fi
+
+
+
 

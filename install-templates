@@ -1,0 +1,11 @@
+echo "Installing .sshrc"
+cp ~/Source/mac-setup/templates/.sshrc ~/.sshrc
+
+echo "Installing .tmux.conf"
+cp ~/Source/mac-setup/templates/.tmux.conf ~/.tmux.conf
+
+echo "Installing .vimrc"
+cp ~/Source/mac-setup/templates/.vimrc ~/.vimrc
+
+echo "Installing .bash_profile"
+cp ~/Source/mac-setup/templates/.bash_profile ~/.bash_profile

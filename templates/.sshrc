@@ -1,0 +1,31 @@
+declare -a environments=("qa110" "qa104" "ops1" "us1" "au1" "mea" "aws1" "ksa1" "cn1" "hk1")
+for env in "${environments[@]}"
+do
+    if [ $(hostname | grep $env | wc -l) == 1 ]; then
+        ENV=$env
+        break
+    fi
+done
+if [ $(hostname | grep lhr | wc -l) == 1 ]; then
+	ENV=uk1
+fi
+if [ $(hostname | grep syd | wc -l) == 1 ]; then
+	ENV=au1
+fi
+if [ $(hostname | grep uk1 | wc -l) == 1 ]; then
+	ENV=uk1b
+fi
+if [ $(hostname | grep jed | wc -l) == 1 ]; then
+	ENV=ksa1
+fi
+
+if [ $(hostname | grep costapp | wc -l) == 1 ]; then
+    # Cost logs
+    alias log.api='tail -n 100 -f /var/log/cost/api.log'
+    alias log.api.request='tail -n 100 -f /var/log/cost/api-request.log'
+    alias log.api.grep='tail -f /var/log/cost/api.log | grep --line-buffered'
+    
+    # Agent logs
+    alias log.agent='tail -n 100 -f /var/log/directory-agent/app.log'
+    alias log.agent.request='tail -n 100 -f /var/log/directory-agent/app-request.log'
+fi
