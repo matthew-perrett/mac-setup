@@ -1,3 +1,5 @@
 brew 'bash-git-prompt'
 brew 'python'
 brew 'tmux'
+brew 'bash'
+brew 'bash-completion@2'
