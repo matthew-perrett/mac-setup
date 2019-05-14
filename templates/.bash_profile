@@ -28,6 +28,8 @@ alias java11="export JAVA_HOME=\"${JAVA11_HOME}\"; export MAVEN_OPTS=\"${JAVA11_
 alias docker.remove.dangling='docker rmi $(docker images -qa -f "dangling=true")'
 
 ########    GIT    ########
+#. /usr/local/share/bash-completion/bash_completio
+. "/usr/local/opt/bash-git-prompt/share/gitprompt.sh"
 alias gs='git status'
 alias gb='git branch'
 alias gc='git checkout'
@@ -82,39 +84,9 @@ git.branch.create() {
 alias git.merge.release.1='git.release && git checkout -b merge-release && git merge origin/master'
 alias git.merge.release.2='git.commit "Merge remote-tracking branch 'origin/master' into merge-release"'
 
-#######    OTHER    #######
-# alias cost.psql.rollback='workman import -d cost -f /Users/mperrett/Aconex/pg_dump/appdb-qa110.sql cost'
-alias cost.psql.resetTestDatabase='dropdb unittest_cost; dropdb e2e_cost; createdb unittest_cost; createdb e2e_cost'
-alias cost.psql.backup='dropdb --if-exists cost_backup && createdb cost_backup -T cost'
-alias cost.psql.rollback='dropdb --if-exists cost && createdb cost -T cost_backup'
-
-# Setup tmuxifier for babylon on call
-export PATH="$HOME/.tmuxifier/bin:$PATH"
-eval "$(tmuxifier init -)"
-
 # history size
 export HISTFILESIZE=1000000
 export HISTSIZE=1000000
-
-# Bash compleate SSHRC
-_complete_sshrc_hosts ()
-{
-        COMPREPLY=()
-        cur="${COMP_WORDS[COMP_CWORD]}"
-        comp_sshrc_hosts=`cat ~/.ssh/known_hosts | \
-                        cut -f 1 -d ' ' | \
-                        sed -e s/,.*//g | \
-                        grep -v ^# | \
-                        uniq | \
-                        grep -v "\[" ;
-                cat ~/.ssh/config | \
-                        grep "^Host " | \
-                        awk '{print $2}'
-                `
-        COMPREPLY=( $(compgen -W "${comp_sshrc_hosts}" -- $cur))
-        return 0
-}
-complete -F _complete_sshrc_hosts sshrc
 
 # Bash compleate SSH
 _complete_ssh_hosts ()
@@ -135,28 +107,4 @@ _complete_ssh_hosts ()
         return 0
 }
 complete -F _complete_ssh_hosts ssh
-
-
-export CLICOLOR=1
-
-ssh-add ~/.ssh/id_rsa
-
-# http://code-worrier.com/blog/autocomplete-git/
-if [ -f ~/.git-completion.bash ]; then
-  . ~/.git-completion.bash
-fi
-
-# Git branch in prompt
-#parse_git_branch() {
-#  git branch 2> /dev/null | sed -e '/^[^*]/d' -e 's/* \(.*\)/ (\1)/'
-#}
-#export PS1="\u@\h:\W\[\033[32m\]\$(parse_git_branch)\[\033[00m\] $ "
-if [ -f "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh" ]; then
-  __GIT_PROMPT_DIR=$(brew --prefix)/opt/bash-git-prompt/share
-  GIT_PROMPT_ONLY_IN_REPO=1
-  source "$(brew --prefix)/opt/bash-git-prompt/share/gitprompt.sh"
-fi
-
-
-
 
