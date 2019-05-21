@@ -6,6 +6,7 @@ cp ~/Source/mac-setup/templates/.tmux.conf ~/.tmux.conf
 
 echo "Installing .vimrc"
 cp ~/Source/mac-setup/templates/.vimrc ~/.vimrc
+cp ~/Source/mac-setup/templates/.vimrc ~/.sshrc.d/.vimrc
 
 echo "Installing .bash_profile"
 cp ~/Source/mac-setup/templates/.bash_profile ~/.bash_profile

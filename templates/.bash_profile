@@ -11,7 +11,11 @@ alias mux.env.deploy='mux env-deploy'
 alias mux.env.logs='mux env-logs'
 
 ########    GENERAL    ########
-alias ls='ls -alst'
+alias ls='lsd'
+alias ll='ls -l'
+alias la='ls -a'
+alias lla='ls -la'
+alias lt='ls --tree'
 alias reload='$SOURCE/mac-setup/install-templates && . ~/.bash_profile'
 alias ssh='sshrc'
 
