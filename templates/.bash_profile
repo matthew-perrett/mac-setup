@@ -1,6 +1,6 @@
 
 . ~/.profile
-
+ssh-add
 SOURCE=~/Source
 alias Source="cd $SOURCE"
 
@@ -11,6 +11,7 @@ alias mux.env.deploy='mux env-deploy'
 alias mux.env.logs='mux env-logs'
 
 ########    GENERAL    ########
+export HISTTIMEFORMAT='%d/%m/%y %T: '
 alias ls='lsd'
 alias ll='ls -l'
 alias la='ls -a'
