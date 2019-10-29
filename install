@@ -11,4 +11,5 @@ brew bundle --verbose
 
 gem install tmuxinator
 
+npm install -g newman
 
