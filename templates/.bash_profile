@@ -6,6 +6,10 @@ SOURCE=~/Source
 alias Source="cd $SOURCE"
 alias hgrep="history | grep"
 
+if [ $ITERM_SESSION_ID ]; then
+  export PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007"; ':"$PROMPT_COMMAND";
+fi
+
 ########    HISTORY    ########
 #export PROMPT_COMMAND='hpwd=$(history 1); hpwd="${hpwd# *[0-9]* }"; if [[ ${hpwd%% *} == "cd" ]]; then cwd=$OLDPWD; else cwd=$PWD; fi; hpwd="${hpwd% ### *} ### $cwd"; history -s "$hpwd";"'
 
