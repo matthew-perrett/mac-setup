@@ -1,37 +1,26 @@
-
-
-. ~/.profile
-#ssh-add
-SOURCE=~/Source
-alias Source="cd $SOURCE"
-alias hgrep="history | grep"
-
-if [ $ITERM_SESSION_ID ]; then
-  export PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007"; ':"$PROMPT_COMMAND";
-fi
-
-########    HISTORY    ########
-#export PROMPT_COMMAND='hpwd=$(history 1); hpwd="${hpwd# *[0-9]* }"; if [[ ${hpwd%% *} == "cd" ]]; then cwd=$OLDPWD; else cwd=$PWD; fi; hpwd="${hpwd% ### *} ### $cwd"; history -s "$hpwd";"'
-
-########    TMUX    ########
-alias mux=tmuxinator
-alias mux.dev='mux cost-dev'
-alias mux.env.deploy='mux env-deploy'
-alias mux.prod.logs='mux cost-prod-logs'
-
 ########    GENERAL    ########
-#export HISTTIMEFORMAT='%d/%m/%y %T: '
+alias Source="cd ~/Source"
+alias hgrep="history | grep"
 alias mix=tmuxinator
 alias ls='lsd'
 alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
-alias reload='$SOURCE/mac-setup/install-templates && . ~/.bash_profile'
 alias ssh='sshrc'
 cdl() {
     cd $1 && ls -a
 }
+
+if [ $ITERM_SESSION_ID ]; then
+  export PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007"; ':"$PROMPT_COMMAND";
+fi
+
+########    TMUX    ########
+alias mux=tmuxinator
+alias mux.dev='mux cost-dev'
+alias mux.env.deploy='mux env-deploy'
+alias mux.prod.logs='mux cost-prod-logs'
 
 ########    JAVA    ########
 export JAVA8_HOME=`/usr/libexec/java_home -v 1.8`
@@ -61,8 +50,9 @@ d.bash() {
 }
 
 ########    GIT    ########
-. "/usr/local/opt/bash-git-prompt/share/gitprompt.sh"
-. ~/bin/git-completion
+#. ~/Source/mac-setup/git-completion.bash
+. ~/bin/zsh-git-prompt/zshrc.sh
+PROMPT='%B%~%b $(git_super_status) $ '
 alias gp='git pull'
 alias gs='git status'
 alias gb='git branch'
@@ -118,22 +108,21 @@ export HISTFILESIZE=1000000
 export HISTSIZE=1000000
 
 # Bash compleate SSH
-_complete_ssh_hosts ()
-{
-        COMPREPLY=()
-        cur="${COMP_WORDS[COMP_CWORD]}"
-        comp_ssh_hosts=`cat ~/.ssh/known_hosts | \
-                        cut -f 1 -d ' ' | \
-                        sed -e s/,.*//g | \
-                        grep -v ^# | \
-                        uniq | \
-                        grep -v "\[" ;
-                cat ~/.ssh/config | \
-                        grep "^Host " | \
-                        awk '{print $2}'
-                `
-        COMPREPLY=( $(compgen -W "${comp_ssh_hosts}" -- $cur))
-        return 0
-}
-complete -F _complete_ssh_hosts ssh
-
+# _complete_ssh_hosts ()
+# {
+#         COMPREPLY=()
+#         cur="${COMP_WORDS[COMP_CWORD]}"
+#         comp_ssh_hosts=`cat ~/.ssh/known_hosts | \
+#                         cut -f 1 -d ' ' | \
+#                         sed -e s/,.*//g | \
+#                         grep -v ^# | \
+#                         uniq | \
+#                         grep -v "\[" ;
+#                 cat ~/.ssh/config | \
+#                         grep "^Host " | \
+#                         awk '{print $2}'
+#                 `
+#         COMPREPLY=( $(compgen -W "${comp_ssh_hosts}" -- $cur))
+#         return 0
+# }
+# complete -F _complete_ssh_hosts ssh

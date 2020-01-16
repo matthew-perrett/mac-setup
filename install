@@ -13,3 +13,6 @@ gem install tmuxinator
 
 npm install -g newman
 
+mkdir ~/bin
+cd ~/bin
+git clone https://github.com/olivierverdier/zsh-git-prompt.git
