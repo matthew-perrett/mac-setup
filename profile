@@ -7,10 +7,6 @@ alias ll='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
-alias ssh='sshrc'
-cdl() {
-    cd $1 && ls -a
-}
 
 if [ $ITERM_SESSION_ID ]; then
   export PROMPT_COMMAND='echo -ne "\033];${PWD##*/}\007"; ':"$PROMPT_COMMAND";
@@ -50,6 +46,10 @@ d.bash() {
 }
 
 ########    GIT    ########
+zstyle ':completion:*:*:git:*' script ~/Source/mac-setup/git-completion.bash
+fpath=(~/Source/mac-setup $fpath)
+autoload -Uz compinit && compinit
+
 #. ~/Source/mac-setup/git-completion.bash
 . ~/bin/zsh-git-prompt/zshrc.sh
 PROMPT='%B%~%b $(git_super_status) $ '
